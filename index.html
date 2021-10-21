@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Jokul Checkout - Rizky</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js"></script>
+  </head>
+  <body>
+    <div class="mx-auto container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <!-- <form action="genToken.php" method="post"> -->
+            <table class="table">
+              <tr>
+                <td>
+                  <h1 class="text-center">JOKUL</h1>
+                </td>
+              </tr>
+              <tr>
+                <td>Server Destination</td>
+                <td>
+                  <select class="form-control" id="server">
+                    <option>Sandbox</option>
+                    <option>Production</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td><input class="form-control" type="text" id="amount" name="amount" value="100000">
+                </td>
+              </tr>
+              <tr>
+                <td><button onclick="request()" type="button" class="btn btn-success" name="button">Kirim</button></td>
+              </tr>
+            </table>
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous"></script>
+    <script type="text/javascript" crossorigin="anonymous">
+      function request() {
+        server = document.getElementById('server').value;
+        amount = document.getElementById('amount').value;
+        axios.post('http://localhost:3000/jokul', {
+          server: server,
+          amount: amount
+        })
+        .then(function (response) {
+          //show payment page
+          loadJokulCheckout(response.data.payment);
+        })
+      }
+    </script>
+  </body>
+</html>

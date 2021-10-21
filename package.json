@@ -1,0 +1,26 @@
+{
+  "name": "jokul-checkout-nodejs",
+  "version": "1.0.0",
+  "description": "A simple code how to connect Jokul checkout in Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jokul",
+    "checkout"
+  ],
+  "author": "Rizky Zulkarnaen",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jokul-nodejs-library": "^2.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
