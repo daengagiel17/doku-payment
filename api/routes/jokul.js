@@ -75,8 +75,8 @@ router.post('/jokul', (req, res, next) => {
 
 router.post('/notify', async (req, res, next) => {
   const rowHeader = req.headers;
-  const requestBody = req.body;
-  const requestTarget = '/jokul/notify';
+  const requestBody = JSON.stringify(req.body);
+  const requestTarget = '/notify';
 
   console.log('===Notification===');
   console.log('rowHeader: ', rowHeader);
@@ -85,22 +85,25 @@ router.post('/notify', async (req, res, next) => {
   // const signature = await dokuLib.getSignature(
   //   rowHeader,
   //   requestBody,
-  //   'SK-9RmEkLm4B24yonDMHWcu'
+  //   process.env.JOKUL_SECRET_KEY
   // );
 
-  const signature = jokul.signature(
+  const digest = jokul.digest(requestBody);
+
+  const signature = jokul.signatureNotify(
     rowHeader["client-id"],
     process.env.JOKUL_SECRET_KEY,
-    requestBody["request-id"],
+    rowHeader["request-id"],
     rowHeader["request-timestamp"],
-    requestTarget
+    requestTarget,
+    digest
   )
 
-  console.log('Signature: ', signature);
-  console.log('Signature header notif: ', rowHeader.signature);
+  console.log('Signature A: ', signature);
+  console.log('Signature B: ', rowHeader.signature);
 
   if (signature === rowHeader.signature) {
-    if (requestBody.transaction.status === "SUCCESS") {
+    if (req.body.transaction.status === "SUCCESS") {
       console.log("success");
     }
     res.status(200).json({
