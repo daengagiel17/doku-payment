@@ -78,19 +78,9 @@ router.post('/notify', async (req, res, next) => {
   const requestBody = JSON.stringify(req.body);
   const requestTarget = '/notify';
 
-  console.log('===Notification===');
-  console.log('rowHeader: ', rowHeader);
-  console.log('requestBody: ', requestBody);
-
-  // const signature = await dokuLib.getSignature(
-  //   rowHeader,
-  //   requestBody,
-  //   process.env.JOKUL_SECRET_KEY
-  // );
-
   const digest = jokul.digest(requestBody);
 
-  const signature = jokul.signatureNotify(
+  const signature = jokul.signature(
     rowHeader["client-id"],
     process.env.JOKUL_SECRET_KEY,
     rowHeader["request-id"],
