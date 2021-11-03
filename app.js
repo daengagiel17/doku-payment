@@ -5,8 +5,14 @@ const bodyParser = require('body-parser');
 
 const jokulRoutes = require('./api/routes/jokul');
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json({
+    verify: (req, res, buf) => {
+        req.rawBody = buf.toString();
+    }
+}));
+
 app.use(cors())
 
 //route

@@ -75,20 +75,13 @@ router.post('/jokul', (req, res, next) => {
 
 router.post('/notify', async (req, res, next) => {
   const rowHeader = req.headers;
-  const requestBody = JSON.stringify(req.body);
-  const requestTarget = '/notify';
+  console.log('Header', req.headers);
+  rowHeader['request-target'] = '/notify';
+  console.log('New Header', req.headers);
+  
+  let signature = await dokuLib.getSignature(rowHeader, req.rawBody, process.env.JOKUL_SECRET_KEY);
 
-  const digest = jokul.digest(requestBody);
-
-  const signature = jokul.signature(
-    rowHeader["client-id"],
-    process.env.JOKUL_SECRET_KEY,
-    rowHeader["request-id"],
-    rowHeader["request-timestamp"],
-    requestTarget,
-    digest
-  )
-
+  console.log('rawBody: ', req.rawBody);
   console.log('Signature A: ', signature);
   console.log('Signature B: ', rowHeader.signature);
 
