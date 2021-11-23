@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Jokul Checkout</title>
+    <title>Jokul Check Status</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js"></script>
   </head>
@@ -27,8 +27,8 @@
                 </td>
               </tr>
               <tr>
-                <td>Amount</td>
-                <td><input class="form-control" type="text" id="amount" name="amount" value="100000">
+                <td>Invoice Number</td>
+                <td><input class="form-control" type="text" id="invoiceNumber" name="Invoice Number" placeholder="Invoice number">
                 </td>
               </tr>
               <tr>
@@ -47,14 +47,10 @@
     <script type="text/javascript" crossorigin="anonymous">
       function request() {
         server = document.getElementById('server').value;
-        amount = document.getElementById('amount').value;
-        axios.post('http://localhost:3000/jokul', {
+        invoiceNumber = document.getElementById('invoiceNumber').value;
+        axios.post('http://localhost:3000/cek-status', {
           server: server,
-          amount: amount
-        })
-        .then(function (response) {
-          //show payment page
-          loadJokulCheckout(response.data.payment);
+          invoiceNumber: invoiceNumber
         })
       }
     </script>

@@ -98,4 +98,30 @@ router.post('/notify', async (req, res, next) => {
   }
 });
 
+router.post('/cek-status', (req, res, next) => {
+  //save details
+  let random = jokul.randomData()
+  let timeStamp = jokul.timeStamp()
+  let requestTarget = '/orders/v1/status/'+req.body.invoiceNumber
+  let clientId = process.env.JOKUL_CLIENT_ID
+  let secretKey = process.env.JOKUL_SECRET_KEY
+  let url = 'https://api-sandbox.doku.com'+ requestTarget;
+
+  let signature = jokul.signature(clientId, secretKey, random, timeStamp, requestTarget)
+
+  axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Client-Id': clientId,
+      'Request-Id': random,
+      'Request-Timestamp': timeStamp,
+      'Signature': signature
+    }
+  }).then(async (response) => {
+      console.log(response.data)
+  }).catch(error => {
+      console.log(error.response)
+  });
+});
+
 module.exports = router
